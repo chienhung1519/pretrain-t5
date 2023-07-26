@@ -1,32 +1,15 @@
-# pretrain-t5
+# export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/
 
-## Requirements
-
-* TensorFlow (https://github.com/tensorflow/tensorflow#Install)
-* JAX (https://github.com/google/jax#installation)
-* FLAX (https://github.com/google/flax#quick-install)
-
-## Prepare Data for Pretraining
-
-```
 python prepare_data.py \
   --data_file="./data/raw/pretrain_pathreports.xlsx" \
   --output_file="./data/processed/pretrain_pathreports.json"
-```
 
-## Train Tokenizer
-
-```
 python train_tokenizer.py \
   --pretrain_data_file="./data/processed/pretrain_pathreports.json" \
   --model_name_or_path="lmsys/fastchat-t5-3b-v1.0" \
   --output_tokenizer_file="./fastchat-t5-3b-lung/tokenizer.json" \
   --output_config_dir="./fastchat-t5-3b-lung/"
-```
 
-## Train Model
-
-```
 python run_t5_mlm_flax.py \
 	--output_dir="./fastchat-t5-3b-lung/" \
 	--model_type="t5" \
@@ -45,8 +28,3 @@ python run_t5_mlm_flax.py \
 	--logging_steps="500" \
 	--save_steps="10000" \
 	--eval_steps="2500"
-```
-
-## Reference
-
-https://github.com/huggingface/transformers/tree/main/examples/flax/language-modeling
